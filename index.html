@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multiple-Question Quiz</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      color: #000000;
+      margin-bottom: 20px;
+    }
+
+    .question {
+      display: none;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      padding: 20px;
+      text-align: left;
+    }
+
+    h2 {
+      color: #000000;
+      margin-bottom: 10px;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #000000;
+      color: #fff;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #000000;
+    }
+
+    .correct {
+      background-color: #000000;
+    }
+
+    .clicked {
+      background-color: #e74c3c;
+    }
+
+    .clicked.correct {
+      background-color: #27ae60;
+    }
+
+    .score {
+      color: #333;
+      margin-top: 20px;
+      font-size: 18px;
+    }
+
+    .score-element {
+      font-weight: bold;
+      color: #2ecc71;
+    }
+
+    #startButton {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <h1>The Australia Quiz</h1>
+
+  <div class="question" id="question1">
+    <h2>Which iconic natural landmark is located in the Northern Territory of Australia?</h2>
+    <button onclick="checkAnswer(this)">Great Barrier Reef</button>
+    <button onclick="checkAnswer(this)">Twelve Apostles</button>
+    <button class="correct" onclick="checkAnswer(this)">Uluru</button>
+  </div>
+
+  <div class="question" id="question2">
+    <h2>The Great Barrier Reef, is situated off the coast of which Australian state?</h2>
+    <button class="correct" onclick="checkAnswer(this)">Queensland</button>
+    <button onclick="checkAnswer(this)">New South Wales</button>
+    <button onclick="checkAnswer(this)">Victoria</button>
+  </div>
+
+  <div class="question" id="question3">
+    <h2>What is the name of the indigenous people of Australia?</h2>
+    <button onclick="checkAnswer(this)">Maori</button>
+    <button class="correct" onclick="checkAnswer(this)">Aboriginal and Torres Strait Islander peoples</button>
+    <button onclick="checkAnswer(this)">Inuit</button>
+  </div>
+
+  <div class="question" id="question4">
+    <h2>Which Australian marsupial is known for its distinctive pouch and is a symbol of the country?</h2>
+    <button onclick="checkAnswer(this)">Koala</button>
+    <button onclick="checkAnswer(this)">Wombat</button>
+    <button class="correct" onclick="checkAnswer(this)">Kangaroo</button>
+  </div>
+
+  <div class="question" id="question5">
+    <h2>What is the capital of Australia?</h2>
+    <button onclick="checkAnswer(this)">Sydney</button>
+    <button class="correct" onclick="checkAnswer(this)">Canberra</button>
+    <button onclick="checkAnswer(this)">Melbourne</button>
+  </div>
+
+  <p class="score">Score: <span class="score-element" id="score">0</span></p>
+  <button id="continueButton" onclick="nextQuestion()" style="display:none;">Continue</button>
+  <button id="startButton" onclick="startQuiz()">Start Quiz</button>
+
+  <script>
+    let currentQuestion = 1;
+    let totalQuestions = 5;
+    let score = 0;
+
+    function startQuiz() {
+      document.getElementById('startButton').style.display = 'none';
+      showQuestion(currentQuestion);
+    }
+
+    function showQuestion(questionNumber) {
+      let currentQuestionElement = document.getElementById(`question${questionNumber}`);
+      currentQuestionElement.style.display = 'block';
+      document.getElementById('continueButton').style.display = 'block';
+    }
+
+    function nextQuestion() {
+      let currentQuestionElement = document.getElementById(`question${currentQuestion}`);
+      currentQuestionElement.style.display = 'none';
+
+      currentQuestion++;
+      if (currentQuestion <= totalQuestions) {
+        showQuestion(currentQuestion);
+      } else {
+        // Quiz is complete, you can add additional logic here
+        document.getElementById('continueButton').style.display = 'none';
+      }
+    }
+
+    function checkAnswer(button) {
+      button.classList.add('clicked');
+      button.disabled = true;
+
+      let isCorrect = button.classList.contains('correct');
+      if (isCorrect) {
+        score++;
+      }
+
+      document.getElementById('score').innerText = score;
+    }
+  </script>
+</body>
+</html>
